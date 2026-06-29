@@ -1,85 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Birthday</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Birthday 🤍</title>
 
 <style>
 
-body{
+*{
 margin:0;
-font-family:Arial;
-color:white;
-overflow:hidden;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
 }
 
-/* 🌌 AESTHETIC BACKGROUND (NO IMAGE) */
-.bg{
-position:fixed;
-width:100%;
-height:100%;
-top:0;
-left:0;
-background:linear-gradient(-45deg,#0f0c29,#302b63,#24243e,#ff4d6d);
+body{
+background:linear-gradient(-45deg,#0f172a,#1e293b,#312e81,#7c3aed);
 background-size:400% 400%;
-animation:gradientMove 12s ease infinite;
-filter:blur(20px) brightness(0.7);
-z-index:-1;
+animation:bg 15s ease infinite;
+overflow-x:hidden;
+color:white;
+min-height:100vh;
 }
 
-@keyframes gradientMove{
+@keyframes bg{
 0%{background-position:0% 50%;}
 50%{background-position:100% 50%;}
 100%{background-position:0% 50%;}
 }
 
-/* 🎂 TITLE */
-h1{
-text-align:center;
-margin-top:30px;
-text-shadow:0 0 10px #ff4d6d;
-}
-
-/* 📦 BOX */
-.box{
-max-width:700px;
+.container{
+max-width:850px;
 margin:40px auto;
 padding:20px;
-background:rgba(0,0,0,0.4);
-border-radius:15px;
-line-height:1.8;
-backdrop-filter:blur(6px);
-opacity:0;
-transition:2s;
 }
 
-/* ✨ BUTTON */
+h1{
+text-align:center;
+font-size:40px;
+margin-bottom:20px;
+text-shadow:0 0 15px #ff7aa2;
+}
+
 .btn{
 display:block;
-margin:20px auto;
-padding:14px 28px;
+margin:auto;
+padding:15px 35px;
 border:none;
-border-radius:30px;
-background:linear-gradient(45deg,#ff4d6d,#ff9a9e);
-color:white;
-font-size:16px;
+border-radius:50px;
+font-size:18px;
 cursor:pointer;
-box-shadow:0 0 20px rgba(255,77,109,0.6);
-transition:0.3s;
+color:white;
+background:linear-gradient(45deg,#ff4d6d,#ff8fab);
+transition:.4s;
+box-shadow:0 0 20px rgba(255,77,109,.5);
 }
 
 .btn:hover{
-transform:scale(1.1);
-box-shadow:0 0 30px rgba(255,77,109,0.9);
+transform:scale(1.05);
 }
 
-/* 💌 FINAL */
+.box{
+display:none;
+margin-top:35px;
+padding:25px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(12px);
+border-radius:20px;
+box-shadow:0 0 20px rgba(0,0,0,.3);
+}
+
+/* ---------- GAMBAR ---------- */
+
+.img-row{
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.img-row img{
+width:110px;
+height:110px;
+object-fit:cover;
+border-radius:15px;
+border:2px solid rgba(255,255,255,.4);
+transition:.4s;
+}
+
+.img-row img:hover{
+transform:scale(1.08);
+}
+
+/* ---------- TEXT ---------- */
+
+#text{
+font-size:18px;
+line-height:1.8;
+white-space:pre-line;
+text-align:left;
+}
+
 #final{
 display:none;
 text-align:center;
-margin-top:20px;
+margin-top:30px;
+font-size:22px;
+animation:fade 2s;
+}
+
+@keyframes fade{
+from{
 opacity:0;
-transition:2s;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 </style>
@@ -87,29 +127,40 @@ transition:2s;
 
 <body>
 
-<!-- 🌌 BACKGROUND -->
-<div class="bg"></div>
-
-<!-- 🎵 MUSIC -->
+<!-- MUSIC -->
 <audio id="music" loop>
 <source src="imagination.mp3" type="audio/mp3">
 </audio>
 
+<div class="container">
+
 <h1>Happy Birthday 🎂</h1>
 
-<button class="btn" onclick="start()">Open Message ✨</button>
+<button class="btn" onclick="start()">
+Open Message 🤍
+</button>
 
 <div class="box" id="box">
 
+<div class="img-row">
+
+<img src="img1.jpg">
+<img src="img2.jpg">
+<img src="img3.jpg">
+<img src="img4.jpg">
+<img src="img5.jpg">
+
+</div>
+
 <div id="text"></div>
 
-</div>
-
 <div id="final">
-<p>my favorite person 🤍</p>
-<p>open when you miss me</p>
+🤍 Thank You For Everything 🤍
 </div>
 
+</div>
+
+</div>
 <script>
 
 const text = `
@@ -117,68 +168,83 @@ Hi U...
 
 Happy Belated Birthday 🎂
 
-I’m late again… I know.
+I'm really sorry sebab I wish U lambat.
 
-I hope U’re doing okay… really.
+I hope your special day penuh dengan happiness, laughter and people who truly love U.
 
-I miss U… but I stay quiet.
+Lately, I keep thinking about U more than I should.
 
-Things will never feel the same.
+I miss the way things used to be.
 
-But I still care… from far away.
+Now everything feels a little different...
 
-If U ever come back… I’ll still be here.
+But I still care about U.
 
-Take care 🤍
+And somehow... I still wait.
+
+If one day U decide to come back into my life, I'll still be here.
+
+Take care of yourself okay 🤍
 `;
 
 function start(){
 
-// 🎵 music
-let audio = document.getElementById("music");
-audio.volume = 0;
-audio.play().catch(()=>{});
+// Hide button
+document.querySelector(".btn").style.display="none";
 
-// fade in music
-let v = 0;
-let fade = setInterval(()=>{
-if(v < 1){
-v += 0.05;
-audio.volume = v;
+// Show message box
+document.getElementById("box").style.display="block";
+
+// Play music
+const audio=document.getElementById("music");
+audio.volume=0;
+
+audio.play().catch(err=>{
+console.log(err);
+});
+
+// Fade in music
+let volume=0;
+
+const fade=setInterval(()=>{
+
+if(volume<1){
+
+volume+=0.05;
+
+audio.volume=volume;
+
 }else{
+
 clearInterval(fade);
+
 }
+
 },200);
 
-// show box
-document.getElementById("box").style.opacity = 1;
+// Typing effect
+let i=0;
 
-// type text
-typeText();
+function typing(){
 
-// final message delay
-setTimeout(()=>{
-document.getElementById("final").style.display="block";
-setTimeout(()=>{
-document.getElementById("final").style.opacity=1;
-},100);
-}, 20000);
+if(i<text.length){
 
-}
+document.getElementById("text").innerHTML+=text.charAt(i);
 
-// ✍️ typing effect
-function typeText(){
-let i = 0;
-let box = document.getElementById("text");
-
-function type(){
-if(i < text.length){
-box.innerHTML += text.charAt(i);
 i++;
-setTimeout(type, 25);
+
+setTimeout(typing,30);
+
+}else{
+
+document.getElementById("final").style.display="block";
+
 }
+
 }
-type();
+
+typing();
+
 }
 
 </script>
