@@ -2,95 +2,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Birthday Surprise</title>
-
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:black;
-color:white;
-text-align:center;
-overflow:hidden;
-}
-
-h1{
-margin-top:80px;
-}
-
-.btn{
-padding:12px 25px;
-border:none;
-border-radius:20px;
-background:#ff4d6d;
-color:white;
-cursor:pointer;
-margin-top:20px;
-}
-
-#msg{
-display:none;
-margin-top:30px;
-padding:20px;
-max-width:600px;
-margin:auto;
-line-height:1.8;
-}
-
-.star{
-position:absolute;
-width:2px;height:2px;
-background:white;
-animation:fall 6s linear infinite;
-opacity:0.7;
-}
-
-@keyframes fall{
-from{transform:translateY(-50px);}
-to{transform:translateY(1000px);}
-}
-</style>
-</head>
-
-<body>
-
-<script>
-for(let i=0;i<50;i++){
-let s=document.createElement("div");
-s.className="star";
-s.style.left=Math.random()*window.innerWidth+"px";
-s.style.top=Math.random()*window.innerHeight+"px";
-document.body.appendChild(s);
-}
-</script>
-
-<h1>✨ Happy Birthday ✨</h1>
-<p>my favorite person 🤍</p>
-
-<button class="btn" onclick="openMsg()">Open Message 🎁</button>
-
-<div id="msg">
-
-<h2>Happy Belated Birthday 🎂</h2>
-
-<p>
-Sorry sebab lambat wish.<br><br>
-
-I hope tahun baru dalam hidup you brings a lot of happiness, good health, and everything that you wish for.<br><br>
-
-I tak tahu apa akan jadi in the future. Tapi kalau satu hari nanti you perlukan someone to talk to, or sekadar ada someone to listen, I still ada. No need to feel awkward or terbeban.<br><br>
-
-I tahu mungkin sekarang you dah tak perlukan I macam dulu. Tapi I still hold on to apa yang I pernah janji dekat you sebelum ni — I will still be there and still waiting, kalau satu hari nanti you perlukan I again.<br><br>
-
-I tak nak force you untuk rasa apa-apa. I cuma nak you tahu yang masih ada part dalam hati I yang masih berharap, even though everything has changed. If takdir brings us back together, I will be grateful. If not, I still pray the best for you.<br><br>
-
-Thank you for all the memories that we once shared. I hope your life will always be filled with good things and the happiness that you deserve.<br><br>
-
-Take care of yourself ya.<br><br>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
 <title>Birthday</title>
 
 <style>
@@ -101,7 +12,7 @@ color:white;
 overflow:hidden;
 }
 
-/* 🌌 background */
+/* 🌌 background slideshow */
 .bg{
 position:fixed;
 width:100%;
@@ -110,50 +21,52 @@ top:0;
 left:0;
 background-size:cover;
 background-position:center;
-filter:blur(8px) brightness(0.4);
-animation:slide 18s infinite;
+filter:blur(10px) brightness(0.35);
+animation:zoomFade 25s infinite;
 z-index:-1;
 }
 
-@keyframes slide{
-0%{background-image:url('img1.jpg');}
-33%{background-image:url('img2.jpg');}
-66%{background-image:url('img3.jpg');}
-100%{background-image:url('img1.jpg');}
+/* 🔥 zoom + fade cinematic */
+@keyframes zoomFade{
+0%{background-image:url('img1.jpg'); transform:scale(1);}
+20%{background-image:url('img2.jpg'); transform:scale(1.1);}
+40%{background-image:url('img3.jpg'); transform:scale(1.2);}
+60%{background-image:url('img4.jpg'); transform:scale(1.1);}
+80%{background-image:url('img5.jpg'); transform:scale(1.2);}
+100%{background-image:url('img1.jpg'); transform:scale(1);}
 }
 
-/* glow title */
+/* title glow */
 h1{
 text-align:center;
 margin-top:30px;
 text-shadow:0 0 10px #ff4d6d;
+animation:glow 2s infinite alternate;
 }
 
-/* chat */
+@keyframes glow{
+from{opacity:0.7; text-shadow:0 0 5px #ff4d6d;}
+to{opacity:1; text-shadow:0 0 20px #ff4d6d;}
+}
+
+/* paragraph style */
 .box{
-max-width:600px;
-margin:auto;
-padding:10px;
-}
-
-.bubble{
-background:rgba(0,0,0,0.6);
-padding:12px;
+max-width:650px;
+margin:40px auto;
+padding:20px;
+background:rgba(0,0,0,0.4);
 border-radius:15px;
-margin:10px 0;
-animation:fadeIn 1s forwards;
+line-height:1.8;
+backdrop-filter:blur(6px);
+animation:fadeIn 2s forwards;
 opacity:0;
+animation-delay:1s;
 }
 
-@keyframes fadeIn{to{opacity:1;}}
-
-/* typing */
-#typing{
-opacity:0.7;
-font-style:italic;
+@keyframes fadeIn{
+to{opacity:1;}
 }
 
-/* button */
 button{
 display:block;
 margin:20px auto;
@@ -169,8 +82,7 @@ cursor:pointer;
 #final{
 display:none;
 text-align:center;
-margin-top:30px;
-font-size:18px;
+margin-top:20px;
 opacity:0;
 animation:fadeIn 2s forwards;
 }
@@ -182,87 +94,74 @@ animation:fadeIn 2s forwards;
 <!-- 🌌 background -->
 <div class="bg"></div>
 
+<!-- 🎵 MUSIC (IMAGINATION) -->
+<audio id="music" loop>
+<source src="imagination.mp3" type="audio/mp3">
+</audio>
+
 <h1>Happy Birthday 🎂</h1>
 
 <button onclick="start()">Open Message</button>
 
-<!-- 🎵 MUSIC -->
-<audio id="music" loop>
-<source src="music.mp3" type="audio/mp3">
-</audio>
+<div class="box" id="text">
 
-<div class="box">
-<div id="typing"></div>
-<div id="chat"></div>
 </div>
 
-<!-- 💌 final message -->
 <div id="final">
-<p>Open when you miss me 🤍</p>
-<p>You don’t have to reply. Just… remember I once cared deeply about you.</p>
+<p>my favorite person 🤍</p>
+<p>open when you miss me</p>
 </div>
 
 <script>
 
-const messages = [
-"Happy Belated Birthday 🎂",
-"Sorry sebab lambat wish.",
-"I hope you’re doing okay and life treats you kindly.",
-"I know you have your family who can make you happy, but I still want you to know I’m here too.",
-"I still keep my promise… I will wait if one day you need me again.",
-"My favorite person 🤍"
-];
+const text = `
+Happy Belated Birthday 🎂
 
-let i=0;
+Sorry sebab lambat wish you.
+
+I hope tahun baru dalam hidup you brings a lot of happiness, good health, and everything that you wish for.
+
+I tak tahu apa akan jadi in the future. Tapi kalau satu hari nanti you perlukan someone to talk to, I still ada. I know you have your family who can make you happy and loved, but I still want you to know I will always be here for you too.
+
+I still hold on to my promise… I will wait, if one day you need me again.
+
+I don’t want to force anything. I just hope you are happy, even if it’s without me.
+
+Thank you for all the memories.
+
+Take care of yourself okay 🤍
+`;
 
 function start(){
 
-// 🎵 music fade in
+// 🎵 play music
 let audio = document.getElementById("music");
 audio.volume = 0;
 audio.play();
 
-let vol = 0;
+// fade in music
+let v = 0;
 let fade = setInterval(()=>{
-if(vol < 1){
-vol += 0.05;
-audio.volume = vol;
+if(v < 1){
+v += 0.05;
+audio.volume = v;
 }else{
 clearInterval(fade);
 }
 },200);
 
-showNext();
-}
-
-function showNext(){
-
-if(i < messages.length){
-
-document.getElementById("typing").innerText = "typing...";
-
-setTimeout(()=>{
-
-document.getElementById("typing").innerText = "";
-
-let div=document.createElement("div");
-div.className="bubble";
-div.innerText=messages[i];
-document.getElementById("chat").appendChild(div);
-
+// show text slowly
+let i = 0;
+function type(){
+if(i < text.length){
+document.getElementById("text").innerHTML += text.charAt(i);
 i++;
-setTimeout(showNext,1500);
-
-},1000);
-
+setTimeout(type, 25);
 }else{
-
-// 💌 show final message
-setTimeout(()=>{
 document.getElementById("final").style.display="block";
-},1000);
-
 }
+}
+type();
 }
 
 </script>
