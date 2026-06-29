@@ -87,17 +87,184 @@ I tak nak force you untuk rasa apa-apa. I cuma nak you tahu yang masih ada part 
 Thank you for all the memories that we once shared. I hope your life will always be filled with good things and the happiness that you deserve.<br><br>
 
 Take care of yourself ya.<br><br>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Birthday</title>
 
-Happy Belated Birthday, my favorite person 🤍
-</p>
+<style>
+body{
+margin:0;
+font-family:Arial;
+color:white;
+overflow:hidden;
+}
 
+/* 🌌 background */
+.bg{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+background-size:cover;
+background-position:center;
+filter:blur(8px) brightness(0.4);
+animation:slide 18s infinite;
+z-index:-1;
+}
+
+@keyframes slide{
+0%{background-image:url('img1.jpg');}
+33%{background-image:url('img2.jpg');}
+66%{background-image:url('img3.jpg');}
+100%{background-image:url('img1.jpg');}
+}
+
+/* glow title */
+h1{
+text-align:center;
+margin-top:30px;
+text-shadow:0 0 10px #ff4d6d;
+}
+
+/* chat */
+.box{
+max-width:600px;
+margin:auto;
+padding:10px;
+}
+
+.bubble{
+background:rgba(0,0,0,0.6);
+padding:12px;
+border-radius:15px;
+margin:10px 0;
+animation:fadeIn 1s forwards;
+opacity:0;
+}
+
+@keyframes fadeIn{to{opacity:1;}}
+
+/* typing */
+#typing{
+opacity:0.7;
+font-style:italic;
+}
+
+/* button */
+button{
+display:block;
+margin:20px auto;
+padding:12px 20px;
+border:none;
+border-radius:20px;
+background:#ff4d6d;
+color:white;
+cursor:pointer;
+}
+
+/* 💌 final message */
+#final{
+display:none;
+text-align:center;
+margin-top:30px;
+font-size:18px;
+opacity:0;
+animation:fadeIn 2s forwards;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🌌 background -->
+<div class="bg"></div>
+
+<h1>Happy Birthday 🎂</h1>
+
+<button onclick="start()">Open Message</button>
+
+<!-- 🎵 MUSIC -->
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mp3">
+</audio>
+
+<div class="box">
+<div id="typing"></div>
+<div id="chat"></div>
+</div>
+
+<!-- 💌 final message -->
+<div id="final">
+<p>Open when you miss me 🤍</p>
+<p>You don’t have to reply. Just… remember I once cared deeply about you.</p>
 </div>
 
 <script>
-function openMsg(){
-document.querySelector(".btn").style.display="none";
-document.getElementById("msg").style.display="block";
+
+const messages = [
+"Happy Belated Birthday 🎂",
+"Sorry sebab lambat wish.",
+"I hope you’re doing okay and life treats you kindly.",
+"I know you have your family who can make you happy, but I still want you to know I’m here too.",
+"I still keep my promise… I will wait if one day you need me again.",
+"My favorite person 🤍"
+];
+
+let i=0;
+
+function start(){
+
+// 🎵 music fade in
+let audio = document.getElementById("music");
+audio.volume = 0;
+audio.play();
+
+let vol = 0;
+let fade = setInterval(()=>{
+if(vol < 1){
+vol += 0.05;
+audio.volume = vol;
+}else{
+clearInterval(fade);
 }
+},200);
+
+showNext();
+}
+
+function showNext(){
+
+if(i < messages.length){
+
+document.getElementById("typing").innerText = "typing...";
+
+setTimeout(()=>{
+
+document.getElementById("typing").innerText = "";
+
+let div=document.createElement("div");
+div.className="bubble";
+div.innerText=messages[i];
+document.getElementById("chat").appendChild(div);
+
+i++;
+setTimeout(showNext,1500);
+
+},1000);
+
+}else{
+
+// 💌 show final message
+setTimeout(()=>{
+document.getElementById("final").style.display="block";
+},1000);
+
+}
+}
+
 </script>
 
 </body>
