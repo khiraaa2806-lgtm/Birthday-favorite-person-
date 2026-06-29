@@ -13,18 +13,24 @@ color:white;
 overflow:hidden;
 }
 
-/* 🌌 BACKGROUND SLIDESHOW */
+/* 🌌 AESTHETIC BACKGROUND (NO IMAGE) */
 .bg{
 position:fixed;
 width:100%;
 height:100%;
 top:0;
 left:0;
-background-size:cover;
-background-position:center;
-filter:blur(10px) brightness(0.35);
-transition:2s ease-in-out;
+background:linear-gradient(-45deg,#0f0c29,#302b63,#24243e,#ff4d6d);
+background-size:400% 400%;
+animation:gradientMove 12s ease infinite;
+filter:blur(20px) brightness(0.7);
 z-index:-1;
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
 /* 🎂 TITLE */
@@ -34,7 +40,7 @@ margin-top:30px;
 text-shadow:0 0 10px #ff4d6d;
 }
 
-/* 📦 MAIN BOX */
+/* 📦 BOX */
 .box{
 max-width:700px;
 margin:40px auto;
@@ -45,28 +51,6 @@ line-height:1.8;
 backdrop-filter:blur(6px);
 opacity:0;
 transition:2s;
-}
-
-/* 🖼️ 5 IMAGES */
-.img-row{
-display:flex;
-justify-content:center;
-gap:10px;
-flex-wrap:wrap;
-margin-bottom:20px;
-}
-
-.img-row img{
-width:90px;
-height:90px;
-object-fit:cover;
-border-radius:12px;
-box-shadow:0 0 10px rgba(0,0,0,0.5);
-transition:0.3s;
-}
-
-.img-row img:hover{
-transform:scale(1.2);
 }
 
 /* ✨ BUTTON */
@@ -103,6 +87,7 @@ transition:2s;
 
 <body>
 
+<!-- 🌌 BACKGROUND -->
 <div class="bg"></div>
 
 <!-- 🎵 MUSIC -->
@@ -116,17 +101,7 @@ transition:2s;
 
 <div class="box" id="box">
 
-  <!-- 🖼️ 5 GAMBAR -->
-  <div class="img-row">
-    <img src="img1.jpg">
-    <img src="img2.jpg">
-    <img src="img3.jpg">
-    <img src="img4.jpg">
-    <img src="img5.jpg">
-  </div>
-
-  <!-- ✍️ TEXT -->
-  <div id="text"></div>
+<div id="text"></div>
 
 </div>
 
@@ -138,26 +113,43 @@ transition:2s;
 <script>
 
 const text = `
+Hi U...
+
 Happy Belated Birthday 🎂
 
-Sorry sebab lambat wish you.
+I’m sorry I’m late again… I don’t even know if this message still matters to U.
 
-I hope tahun baru dalam hidup you brings a lot of happiness, good health, and everything that you wish for.
+But I still want to say it.
 
-Take care of yourself okay 🤍
+I hope your day was okay… I hope U smiled today, even just a little.
+
+Lately, I keep thinking about U more than I should.
+
+Sometimes I miss the way things used to be… the way we talked, the way everything felt so easy back then.
+
+Now it feels different… quieter… like something is missing.
+
+I just want U to know that I still care about U, deeply.
+
+I still miss U… more than I ever say.
+
+And even if we are far now, I still find myself hoping U are doing okay.
+
+I will always be here… waiting, silently, for U… if one day U decide to come back into my life again.
+
+Take care of yourself okay…
+
+I really mean it 🤍
 `;
-
-let images = ["img1.jpg","img2.jpg","img3.jpg","img4.jpg","img5.jpg"];
-let imgIndex = 0;
 
 function start(){
 
 // 🎵 music
 let audio = document.getElementById("music");
 audio.volume = 0;
-audio.play();
+audio.play().catch(()=>{});
 
-// fade music
+// fade in music
 let v = 0;
 let fade = setInterval(()=>{
 if(v < 1){
@@ -167,13 +159,6 @@ audio.volume = v;
 clearInterval(fade);
 }
 },200);
-
-// 🌌 background slide
-setInterval(()=>{
-document.querySelector(".bg").style.backgroundImage =
-"url('" + images[imgIndex] + "')";
-imgIndex = (imgIndex + 1) % images.length;
-}, 5000);
 
 // show box
 document.getElementById("box").style.opacity = 1;
@@ -191,7 +176,7 @@ document.getElementById("final").style.opacity=1;
 
 }
 
-// ✍️ type animation
+// ✍️ typing effect
 function typeText(){
 let i = 0;
 let box = document.getElementById("text");
