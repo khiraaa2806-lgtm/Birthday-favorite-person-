@@ -5,6 +5,7 @@
 <title>Birthday</title>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial;
@@ -12,7 +13,7 @@ color:white;
 overflow:hidden;
 }
 
-/* 🌌 background slideshow */
+/* 🌌 BACKGROUND SLIDESHOW */
 .bg{
 position:fixed;
 width:100%;
@@ -22,88 +23,110 @@ left:0;
 background-size:cover;
 background-position:center;
 filter:blur(10px) brightness(0.35);
-animation:zoomFade 25s infinite;
+transition:2s ease-in-out;
 z-index:-1;
 }
 
-/* 🔥 zoom + fade cinematic */
-@keyframes zoomFade{
-0%{background-image:url('img1.jpg'); transform:scale(1);}
-20%{background-image:url('img2.jpg'); transform:scale(1.1);}
-40%{background-image:url('img3.jpg'); transform:scale(1.2);}
-60%{background-image:url('img4.jpg'); transform:scale(1.1);}
-80%{background-image:url('img5.jpg'); transform:scale(1.2);}
-100%{background-image:url('img1.jpg'); transform:scale(1);}
-}
-
-/* title glow */
+/* 🎂 TITLE */
 h1{
 text-align:center;
 margin-top:30px;
 text-shadow:0 0 10px #ff4d6d;
-animation:glow 2s infinite alternate;
 }
 
-@keyframes glow{
-from{opacity:0.7; text-shadow:0 0 5px #ff4d6d;}
-to{opacity:1; text-shadow:0 0 20px #ff4d6d;}
-}
-
-/* paragraph style */
+/* 📦 MAIN BOX */
 .box{
-max-width:650px;
+max-width:700px;
 margin:40px auto;
 padding:20px;
 background:rgba(0,0,0,0.4);
 border-radius:15px;
 line-height:1.8;
 backdrop-filter:blur(6px);
-animation:fadeIn 2s forwards;
 opacity:0;
-animation-delay:1s;
+transition:2s;
 }
 
-@keyframes fadeIn{
-to{opacity:1;}
+/* 🖼️ 5 IMAGES */
+.img-row{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
 }
 
-button{
+.img-row img{
+width:90px;
+height:90px;
+object-fit:cover;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,0.5);
+transition:0.3s;
+}
+
+.img-row img:hover{
+transform:scale(1.2);
+}
+
+/* ✨ BUTTON */
+.btn{
 display:block;
 margin:20px auto;
-padding:12px 20px;
+padding:14px 28px;
 border:none;
-border-radius:20px;
-background:#ff4d6d;
+border-radius:30px;
+background:linear-gradient(45deg,#ff4d6d,#ff9a9e);
 color:white;
+font-size:16px;
 cursor:pointer;
+box-shadow:0 0 20px rgba(255,77,109,0.6);
+transition:0.3s;
 }
 
-/* 💌 final message */
+.btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 30px rgba(255,77,109,0.9);
+}
+
+/* 💌 FINAL */
 #final{
 display:none;
 text-align:center;
 margin-top:20px;
 opacity:0;
-animation:fadeIn 2s forwards;
+transition:2s;
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- 🌌 background -->
 <div class="bg"></div>
 
-<!-- 🎵 MUSIC (IMAGINATION) -->
+<!-- 🎵 MUSIC -->
 <audio id="music" loop>
 <source src="imagination.mp3" type="audio/mp3">
 </audio>
 
 <h1>Happy Birthday 🎂</h1>
 
-<button onclick="start()">Open Message</button>
+<button class="btn" onclick="start()">Open Message ✨</button>
 
-<div class="box" id="text">
+<div class="box" id="box">
+
+  <!-- 🖼️ 5 GAMBAR -->
+  <div class="img-row">
+    <img src="img1.jpg">
+    <img src="img2.jpg">
+    <img src="img3.jpg">
+    <img src="img4.jpg">
+    <img src="img5.jpg">
+  </div>
+
+  <!-- ✍️ TEXT -->
+  <div id="text"></div>
 
 </div>
 
@@ -121,25 +144,20 @@ Sorry sebab lambat wish you.
 
 I hope tahun baru dalam hidup you brings a lot of happiness, good health, and everything that you wish for.
 
-I tak tahu apa akan jadi in the future. Tapi kalau satu hari nanti you perlukan someone to talk to, I still ada. I know you have your family who can make you happy and loved, but I still want you to know I will always be here for you too.
-
-I still hold on to my promise… I will wait, if one day you need me again.
-
-I don’t want to force anything. I just hope you are happy, even if it’s without me.
-
-Thank you for all the memories.
-
 Take care of yourself okay 🤍
 `;
 
+let images = ["img1.jpg","img2.jpg","img3.jpg","img4.jpg","img5.jpg"];
+let imgIndex = 0;
+
 function start(){
 
-// 🎵 play music
+// 🎵 music
 let audio = document.getElementById("music");
 audio.volume = 0;
 audio.play();
 
-// fade in music
+// fade music
 let v = 0;
 let fade = setInterval(()=>{
 if(v < 1){
@@ -150,15 +168,39 @@ clearInterval(fade);
 }
 },200);
 
-// show text slowly
+// 🌌 background slide
+setInterval(()=>{
+document.querySelector(".bg").style.backgroundImage =
+"url('" + images[imgIndex] + "')";
+imgIndex = (imgIndex + 1) % images.length;
+}, 5000);
+
+// show box
+document.getElementById("box").style.opacity = 1;
+
+// type text
+typeText();
+
+// final message delay
+setTimeout(()=>{
+document.getElementById("final").style.display="block";
+setTimeout(()=>{
+document.getElementById("final").style.opacity=1;
+},100);
+}, 20000);
+
+}
+
+// ✍️ type animation
+function typeText(){
 let i = 0;
+let box = document.getElementById("text");
+
 function type(){
 if(i < text.length){
-document.getElementById("text").innerHTML += text.charAt(i);
+box.innerHTML += text.charAt(i);
 i++;
 setTimeout(type, 25);
-}else{
-document.getElementById("final").style.display="block";
 }
 }
 type();
