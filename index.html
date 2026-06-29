@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Birthday Surprise</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:black;
+color:white;
+text-align:center;
+overflow:hidden;
+}
+
+h1{
+margin-top:80px;
+}
+
+.btn{
+padding:12px 25px;
+border:none;
+border-radius:20px;
+background:#ff4d6d;
+color:white;
+cursor:pointer;
+margin-top:20px;
+}
+
+#msg{
+display:none;
+margin-top:30px;
+padding:20px;
+max-width:600px;
+margin:auto;
+line-height:1.8;
+}
+
+.star{
+position:absolute;
+width:2px;height:2px;
+background:white;
+animation:fall 6s linear infinite;
+opacity:0.7;
+}
+
+@keyframes fall{
+from{transform:translateY(-50px);}
+to{transform:translateY(1000px);}
+}
+</style>
+</head>
+
+<body>
+
+<script>
+for(let i=0;i<50;i++){
+let s=document.createElement("div");
+s.className="star";
+s.style.left=Math.random()*window.innerWidth+"px";
+s.style.top=Math.random()*window.innerHeight+"px";
+document.body.appendChild(s);
+}
+</script>
+
+<h1>✨ Happy Birthday ✨</h1>
+<p>my favorite person 🤍</p>
+
+<button class="btn" onclick="openMsg()">Open Message 🎁</button>
+
+<div id="msg">
+
+<h2>Happy Belated Birthday 🎂</h2>
+
+<p>
+I know I’m late…<br><br>
+
+But I still want to wish you properly.<br><br>
+
+If you ever feel alone, I’m still here for you.<br><br>
+
+I may not be perfect, but I’m still the same person who cares about you.<br><br>
+
+My favorite person 🤍
+</p>
+
+</div>
+
+<script>
+function openMsg(){
+document.querySelector(".btn").style.display="none";
+document.getElementById("msg").style.display="block";
+}
+</script>
+
+</body>
+</html>
